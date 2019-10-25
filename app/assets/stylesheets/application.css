@@ -13,3 +13,31 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  background-color: #282828;
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+}
+
+form input[type="submit"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
