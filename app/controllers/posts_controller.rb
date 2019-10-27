@@ -1,18 +1,18 @@
 class PostsController < ApplicationController
-  #before_action :require_login, only: [:create, :edit, :update, :destroy]
+  before_action :require_login, only: [:create, :edit, :update, :destroy]
   before_action :find_post, only: [:show, :edit, :update, :destroy]
   def index
     @posts = Post.all.order("created_at DESC")
   end
 
   def new
-    @post = Post.new
+    @post = current_user.posts.build
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to @post
+      redirect_to @post, notice: "Post Created!"
     else
       render "new"
     end
@@ -22,13 +22,18 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @post = current_user.posts.find(params[:id])
+    if !@post 
+      redirect_to action: "show", id: :id, notice: "No access"
+    end
   end
 
   def update
-    if @post.update(post_params)
-      redirect_to @post
+    @post = current_user.posts.build(post_params)
+    if @post.update_attributes(post_params)
+      redirect_to @post, notice: "Post Updated!"
     else
-      render "edit"
+      render "new"
     end
   end
   
@@ -44,6 +49,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :body, :id)
+    params.require(:post).permit(:title, :body)
   end
 end
