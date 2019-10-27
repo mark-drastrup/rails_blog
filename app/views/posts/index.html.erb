@@ -1,7 +1,7 @@
 <div class="post">
   <% @posts.each { |post| %>
   <div class="post__container">
-    <h2><%= post.title %></h2>
+    <h2 class="post__title"><%= post.title %></h2>
     <div><%= truncate(post.body, :length => 500) %></div>
     <br>
     <%= link_to "Read Post", post %>
